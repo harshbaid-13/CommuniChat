@@ -67,7 +67,7 @@ const SideDrawer = () => {
       });
     }
   };
-  const accessChat = async (id) => {
+  const accessChat = async (userId) => {
     try {
       setLoadingChat(true);
       const config = {
@@ -76,135 +76,138 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post("/api/chat", { id }, config);
+      const { data } = await axios.post("/api/chat", { userId }, config);
+      console.log(chats);
+      console.log(Array.isArray(chats));
+
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
     } catch (error) {
       toast({
-        title: "Error Occured!",
+        title: "Error occured while fetching chat!",
         description: error.message,
         status: "error",
         duration: 2000,
       });
     }
   };
-  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   // while (userInfo._id !== user._id);
 
   return (
     <>
-      {/* TODO: uncomment this shit!
+      TODO: uncomment this shit!
       {userInfo._id === user._id ? (
-        <> */}
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        bg="white"
-        w={"100%"}
-        // TODO: change styling
-        // w={"99%"}
-        // m={"auto"}
-        // mt={"5px"}
-        p={"5px 10px 5px 10px"}
-        borderWidth={"5px"}
-        // borderColor={"transparent"}
-      >
-        <Tooltip hasArrow label=" Search users" bg="gray.300" color="black">
-          <Button onClick={onOpen} variant="ghost">
-            <SearchIcon />
-            <Text display={{ base: "none", md: "flex" }} px={4}>
-              Search User
-            </Text>
-          </Button>
-        </Tooltip>
-        <Text fontSize={"2xl"} fontFamily={"Work Sans"}>
-          CommuniChat
-        </Text>
-        <div>
-          <Menu>
-            <MenuButton p={1}>
-              <BellIcon fontSize={"2xl"} m={1} />
-            </MenuButton>
-            {/* <MenuList></MenuList> */}
-          </Menu>
-          <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-              {/* TODO: Avatar Badge */}
-              <Avatar
-                size="sm"
-                name={user.name}
-                // TODO: remove default picture
-                src={user.pic}
-              />
-            </MenuButton>
-            <MenuList>
-              <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>
-              </ProfileModal>
-              <MenuItem onClick={logoutUser}>Logout</MenuItem>
-            </MenuList>
-          </Menu>
-        </div>
-      </Box>
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
-
-          <DrawerBody>
-            <Box display={"flex"} pb={2}>
-              <Input
-                placeholder="Search by name or email"
-                // mr={2}
-                value={search}
-                onChange={(e) => {
-                  // TODO: issue with handleSearch here
-                  setSearch(e.target.value);
-                  handleSearch(e.target.value);
-                }}
-              />
-              {/* <Button onClick={() => handleSearch(search)}>Go</Button> */}
-            </Box>
-            {loading ? (
-              <ChatLoading />
-            ) : search ? (
-              searchResults.length > 0 ? (
-                searchResults.map((user) => (
-                  <UserListItem
-                    key={user._id}
-                    user={user}
-                    handleFunction={() => accessChat(user._id)}
-                  />
-                ))
-              ) : (
-                <Text
-                  w={"100%"}
-                  display={"flex"}
-                  justifyContent="center"
-                  alignItems="center"
-                  my={2}
-                  px={4}
-                  overflow="hidden"
-                  color={"gray.500"}
-                >
-                  No results found for "{search}"
+        <>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            bg="white"
+            w={"100%"}
+            // TODO: change styling
+            // w={"99%"}
+            // m={"auto"}
+            // mt={"5px"}
+            p={"5px 10px 5px 10px"}
+            borderWidth={"5px"}
+            // borderColor={"transparent"}
+          >
+            <Tooltip hasArrow label="Search users" bg="gray.300" color="black">
+              <Button onClick={onOpen} variant="ghost">
+                <SearchIcon />
+                <Text display={{ base: "none", md: "flex" }} px={4}>
+                  Search User
                 </Text>
-              )
-            ) : (
-              <></>
-            )}
-            {loadingChat && <Spinner ml="auto" display="flex" />}
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-      {/* </>
+              </Button>
+            </Tooltip>
+            <Text fontSize={"2xl"} fontFamily={"Work Sans"}>
+              CommuniChat
+            </Text>
+            <div>
+              <Menu>
+                <MenuButton p={1}>
+                  <BellIcon fontSize={"2xl"} m={1} />
+                </MenuButton>
+                {/* <MenuList></MenuList> */}
+              </Menu>
+              <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                  {/* TODO: Avatar Badge */}
+                  <Avatar
+                    size="sm"
+                    name={user.name}
+                    // TODO: remove default picture
+                    src={user.pic}
+                  />
+                </MenuButton>
+                <MenuList>
+                  <ProfileModal user={user}>
+                    <MenuItem>My Profile</MenuItem>
+                  </ProfileModal>
+                  <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          </Box>
+          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
+
+              <DrawerBody>
+                <Box display={"flex"} pb={2}>
+                  <Input
+                    placeholder="Search by name or email"
+                    // mr={2}
+                    value={search}
+                    onChange={(e) => {
+                      // TODO: issue with handleSearch here
+                      setSearch(e.target.value);
+                      handleSearch(e.target.value);
+                    }}
+                  />
+                  {/* <Button onClick={() => handleSearch(search)}>Go</Button> */}
+                </Box>
+                {loading ? (
+                  <ChatLoading num={13} />
+                ) : search ? (
+                  searchResults.length > 0 ? (
+                    searchResults.map((user) => (
+                      <UserListItem
+                        key={user._id}
+                        user={user}
+                        handleFunction={() => accessChat(user._id)}
+                      />
+                    ))
+                  ) : (
+                    <Text
+                      w={"100%"}
+                      display={"flex"}
+                      justifyContent="center"
+                      alignItems="center"
+                      my={2}
+                      px={4}
+                      overflow="hidden"
+                      color={"gray.500"}
+                    >
+                      No results found for "{search}"
+                    </Text>
+                  )
+                ) : (
+                  <></>
+                )}
+                {loadingChat && <Spinner ml="auto" display="flex" />}
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        </>
       ) : (
         window.location.reload(false)
-      )} */}
+      )}
     </>
   );
 };
