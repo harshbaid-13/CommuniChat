@@ -23,7 +23,7 @@ import axios from "axios";
 import UserListItem from "../UserAvatar/UserListItem";
 import UserBadgeItem from "../UserAvatar/UserBadgeItem";
 
-const UpdateGroupChatModal = ({ children, fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -168,6 +168,7 @@ const UpdateGroupChatModal = ({ children, fetchAgain, setFetchAgain }) => {
       );
       user._id === userToRemove._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
+      fetchMessages();
       if (user._id === userToRemove._id) {
         toast({
           title: `You left the group!`,

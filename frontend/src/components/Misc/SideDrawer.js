@@ -10,7 +10,6 @@ import {
   Avatar,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -94,11 +93,9 @@ const SideDrawer = () => {
     }
   };
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  // while (userInfo._id !== user._id);
 
   return (
     <>
-      TODO: uncomment this shit!
       {userInfo._id === user._id ? (
         <>
           <Box
