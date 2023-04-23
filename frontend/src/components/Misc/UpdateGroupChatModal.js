@@ -228,7 +228,6 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   };
   return (
     <>
-      {/* {console.log(selectedChat)} */}
       <IconButton
         display={{ base: "flex" }}
         icon={<ViewIcon boxSize={5} color="teal" />}

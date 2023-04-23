@@ -136,7 +136,6 @@ const SideDrawer = () => {
             </Text>
             <div>
               <Menu>
-                {console.log(notifications)}
                 <MenuButton p={1}>
                   <NotificationBadge
                     count={notifications.length}

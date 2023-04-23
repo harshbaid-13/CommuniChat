@@ -53,12 +53,10 @@ const Signup = () => {
             duration: 5000,
             isClosable: true,
           });
-          console.log(data);
           setPic(data.url.toString());
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
           setLoading(false);
         });
     } else {
