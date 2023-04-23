@@ -35,10 +35,10 @@ const MyChats = ({ fetchAgain }) => {
       flexDir={"column"}
       alignItems={"center"}
       p={3}
-      bg={"white"}
+      bg={"#202c33"}
+      color="#aebac1"
       w={{ base: "100%", md: "30%" }}
       borderRadius={"lg"}
-      borderWidth={"1px"}
     >
       <Box
         pb={3}
@@ -53,6 +53,7 @@ const MyChats = ({ fetchAgain }) => {
         My Chats
         <GroupChatModel>
           <Button
+            color="#005c4b"
             display={"flex"}
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
@@ -65,7 +66,8 @@ const MyChats = ({ fetchAgain }) => {
         display={"flex"}
         flexDir={"column"}
         p={3}
-        bg={"F8F8F8"}
+        bg={"#202c33"}
+        color="#aebac1"
         w={"100%"}
         h={"100%"}
         borderRadius={"lg"}

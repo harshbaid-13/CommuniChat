@@ -15,6 +15,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Input,
+  MenuGroup,
   useToast,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/spinner";
@@ -27,14 +28,21 @@ import UserListItem from "../UserAvatar/UserListItem";
 import ChatLoading from "./ChatLoading";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
+import NotificationBadge, { Effect } from "react-notification-badge";
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notifications,
+    setNotifications,
+  } = ChatState();
   const history = useHistory();
   const toast = useToast();
   const logoutUser = () => {
@@ -76,8 +84,6 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.post("/api/chat", { userId }, config);
-      console.log(chats);
-      console.log(Array.isArray(chats));
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -102,15 +108,16 @@ const SideDrawer = () => {
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
-            bg="white"
-            w={"100%"}
+            bg="#111b21"
+            color={"#aebac1"}
             // TODO: change styling
-            // w={"99%"}
-            // m={"auto"}
-            // mt={"5px"}
+            width={"98%"}
+            m={"auto"}
+            mt={"5px"}
             p={"5px 10px 5px 10px"}
             borderWidth={"5px"}
-            // borderColor={"transparent"}
+            borderRadius={"lg"}
+            borderColor={"transparent"}
           >
             <Tooltip hasArrow label="Search users" bg="gray.300" color="black">
               <Button onClick={onOpen} variant="ghost">
@@ -125,13 +132,52 @@ const SideDrawer = () => {
             </Text>
             <div>
               <Menu>
+                {console.log(notifications)}
                 <MenuButton p={1}>
+                  <NotificationBadge
+                    count={notifications.length}
+                    effect={Effect.SCALE}
+                  />
                   <BellIcon fontSize={"2xl"} m={1} />
                 </MenuButton>
-                {/* <MenuList></MenuList> */}
+                <MenuList bg="#111b21">
+                  {!notifications || notifications.length === 0 ? (
+                    <MenuGroup
+                      bg="#111b21"
+                      title="No Notifications"
+                    ></MenuGroup>
+                  ) : (
+                    notifications.map((notification) => {
+                      return (
+                        <MenuItem
+                          bg="#111b21"
+                          key={notification._id}
+                          onClick={() => {
+                            setSelectedChat(notification.chat);
+                            setNotifications(
+                              notifications.filter(
+                                (n) => n._id !== notification._id
+                              )
+                            );
+                          }}
+                        >
+                          {notification.chat.isGroupChat
+                            ? `${notification.chat.chatName} has new message`
+                            : `${
+                                notification.sender.name.split(" ")[0]
+                              } has new message`}
+                        </MenuItem>
+                      );
+                    })
+                  )}
+                </MenuList>
               </Menu>
               <Menu>
-                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                <MenuButton
+                  colorScheme="#111b21"
+                  as={Button}
+                  rightIcon={<ChevronDownIcon />}
+                >
                   {/* TODO: Avatar Badge */}
                   <Avatar
                     size="sm"
@@ -140,11 +186,13 @@ const SideDrawer = () => {
                     src={user.pic}
                   />
                 </MenuButton>
-                <MenuList>
+                <MenuList bg="#202c33" borderColor="transparent">
                   <ProfileModal user={user}>
-                    <MenuItem>My Profile</MenuItem>
+                    <MenuItem bg="#202c33">My Profile</MenuItem>
                   </ProfileModal>
-                  <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                  <MenuItem bg="#202c33" onClick={logoutUser}>
+                    Logout
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </div>
