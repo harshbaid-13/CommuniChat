@@ -99,7 +99,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/user",
+        "https://communichat-api-backend.vercel.app/api/user",
         { name, email, password, pic },
         config
       );

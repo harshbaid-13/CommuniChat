@@ -13,7 +13,10 @@ const MyChats = ({ fetchAgain }) => {
   const fetchChats = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(
+        "https://communichat-api-backend.vercel.app/api/chat",
+        config
+      );
       setChats(data);
     } catch (error) {
       toast({

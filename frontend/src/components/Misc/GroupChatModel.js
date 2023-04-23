@@ -39,7 +39,10 @@ const GroupChatModel = ({ children }) => {
     try {
       setLoading(true);
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get(`/api/user?search=${query}`, config);
+      const { data } = await axios.get(
+        `https://communichat-api-backend.vercel.app/api/user?search=${query}`,
+        config
+      );
       setSearchResults(data);
       setLoading(false);
     } catch (error) {
@@ -71,7 +74,7 @@ const GroupChatModel = ({ children }) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const { data } = await axios.post(
-        "/api/chat/group/",
+        "https://communichat-api-backend.vercel.app/api/chat/group/",
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),

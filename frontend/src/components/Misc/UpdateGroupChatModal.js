@@ -73,7 +73,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const { data } = await axios.post(
-        "/api/chat/group/",
+        "https://communichat-api-backend.vercel.app/api/chat/group/",
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),
@@ -119,7 +119,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setLoading(true);
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const { data } = await axios.put(
-        "/api/chat/groupadd",
+        "https://communichat-api-backend.vercel.app/api/chat/groupadd",
         {
           chatId: selectedChat._id,
           userId: userToAdd._id,
@@ -158,7 +158,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const { data } = await axios.put(
-        "/api/chat/groupremove",
+        "https://communichat-api-backend.vercel.app/api/chat/groupremove",
         {
           chatId: selectedChat._id,
           userId: userToRemove._id,
@@ -202,7 +202,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setRenameLoading(true);
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const { data } = await axios.put(
-        "/api/chat/rename",
+        "https://communichat-api-backend.vercel.app/api/chat/rename",
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
