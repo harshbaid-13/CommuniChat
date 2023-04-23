@@ -28,11 +28,11 @@ app.use("/api/message", messageRoutes);
 //     res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
 //   });
 // } else {
-//   app.get("/", (req, res) => {
-//     res.send("API is Running");
-//   });
+//
 // }
-
+app.get("/", (req, res) => {
+  res.send("API is Running");
+});
 app.use(notFound);
 app.use(errorHandler);
 
