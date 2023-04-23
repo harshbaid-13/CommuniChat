@@ -16,11 +16,12 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.header("Access-Control-Allow-Methods", "POST, PUT, DELETE, OPTIONS, GET");
   next();
 });
+
 app.use(express.json()); // to accept JSON Data
 app.use(express.urlencoded({ extended: false }));
 app.get("/chats", (req, res) => {
