@@ -252,6 +252,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           <ModalCloseButton />
           <ModalBody flexDir="column" display="flex" alignItems="center">
             <Box display="flex" width={"100%"} flexWrap="wrap" mb={2}>
+              {/* Keep the admin ahead */}
               {selectedChat.users
                 .slice(0)
                 .reverse()
