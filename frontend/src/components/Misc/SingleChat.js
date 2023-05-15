@@ -19,7 +19,7 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import Lottie from "react-lottie";
 
-const ENDPOINT = "https://communichat.vercel.app/";
+const ENDPOINT = "https://communichat-api-backend.vercel.app/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -68,7 +68,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `https://communichat-api-backend.vercel.app/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);

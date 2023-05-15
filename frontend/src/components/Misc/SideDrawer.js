@@ -62,7 +62,10 @@ const SideDrawer = () => {
     try {
       setLoading(true);
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get(`/api/user?search=${info}`, config);
+      const { data } = await axios.get(
+        `https://communichat-api-backend.vercel.app/api/user?search=${info}`,
+        config
+      );
       setSearchResults(data);
       setLoading(false);
     } catch (error) {

@@ -41,7 +41,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     try {
       setLoading(true);
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get(`/api/user?search=${query}`, config);
+      const { data } = await axios.get(
+        `https://communichat-api-backend.vercel.app/api/user?search=${query}`,
+        config
+      );
       setSearchResults(data);
       setLoading(false);
     } catch (error) {
